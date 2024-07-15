@@ -35,3 +35,6 @@ renamed as (
 )
 
 select * from renamed
+
+HAVING
+    CAST(SUM(CASE WHEN shared_request_flag = 'Y' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) <= 0.5;

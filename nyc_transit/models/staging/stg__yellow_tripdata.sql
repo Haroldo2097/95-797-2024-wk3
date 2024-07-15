@@ -13,7 +13,8 @@ renamed as (
         passenger_count::int as passenger_count,
         trip_distance,
         ratecodeid,
-        {{flag_to_bool("store_and_fwd_flag")}} as store_and_fwd_flag,
+        CASE WHEN store_and_fwd_flag = 'Y' THEN true ELSE false END as store_and_fwd_flag_boolean,
+      -- {{flag_to_bool("store_and_fwd_flag")}} as store_and_fwd_flag,
         pulocationid,
         dolocationid,
         payment_type,
@@ -34,3 +35,5 @@ renamed as (
 )
 
 select * from renamed
+--HAVING
+--    CAST(SUM(CASE WHEN shared_request_flag = 'Y' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) <= 0.5;

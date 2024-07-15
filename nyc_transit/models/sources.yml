@@ -102,6 +102,13 @@ sources:
         columns:
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            tests:
+                - not_null
+                - dbt_expectations.expect_column_to_exist
+                - relationships:
+                    to: source('main','fhv_bases')
+                    field: base_number
+
           - name: pickup_datetime
             data_type: TIMESTAMP
           - name: dropoff_datetime
@@ -121,26 +128,51 @@ sources:
         columns:
           - name: hvfhs_license_num
             data_type: CHARACTER VARYING(256)
+            description: "The TLC license number of the HVFHS base or business As of September 2019, the HVFHS licensees are the following
+              • HV0002: Juno
+              • HV0003: Uber
+              • HV0004: Via
+              • HV0005: Lyft"
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            description: The TLC Base License Number of the base that dispatched the trip
           - name: originating_base_num
             data_type: CHARACTER VARYING(256)
+            description: Base number of the base that received orig trip request
           - name: request_datetime
             data_type: TIMESTAMP
+            description: date/time when passenger requested to be picked up
           - name: on_scene_datetime
             data_type: TIMESTAMP
+            description: date/time when driver arrived at pick-up location (Accessible Vehicles only)
           - name: pickup_datetime
             data_type: TIMESTAMP
+            description: the date and time of the trip pick up
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
           - name: dropoff_datetime
             data_type: TIMESTAMP
+            description: the date and time of the trip dropoff
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
           - name: pulocationid
             data_type: BIGINT
+            description: TLC Taxi Zone which trip picked up
           - name: dolocationid
             data_type: BIGINT
+            description: TLC Taxi Zone in which trip dropped off
           - name: trip_miles
             data_type: DOUBLE
+            description: Total miles for trip
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 10000
           - name: trip_time
             data_type: BIGINT
+            description: total time in seconds for trip
           - name: base_passenger_fare
             data_type: DOUBLE
           - name: tolls
@@ -163,6 +195,12 @@ sources:
             data_type: CHARACTER VARYING(256)
           - name: access_a_ride_flag
             data_type: CHARACTER VARYING(256)
+            description: Was trip admin'd on behalf of the MTA (Y/N)?
+            tests:
+              - accepted_values:
+                  values: ["Y", "N"]
+                  config:
+                    severity: warn
           - name: wav_request_flag
             data_type: CHARACTER VARYING(256)
           - name: wav_match_flag

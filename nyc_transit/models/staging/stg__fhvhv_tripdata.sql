@@ -30,7 +30,7 @@ renamed as (
         {{flag_to_bool("shared_match_flag")}} as shared_match_flag,
         {{flag_to_bool("access_a_ride_flag")}} as access_a_ride_flag,
         {{flag_to_bool("wav_request_flag")}} as wav_request_flag,
-        {{flag_to_bool("wav_match_flag",)}} as wav_match_flag,
+        {{flag_to_bool("wav_match_flag")}} as wav_match_flag,
         filename
 
     from source
@@ -38,3 +38,5 @@ renamed as (
 )
 
 select * from renamed
+--HAVING
+--    CAST(SUM(CASE WHEN shared_request_flag = 'Y' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) <= 0.5;
