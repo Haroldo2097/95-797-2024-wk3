@@ -198,7 +198,7 @@ sources:
             description: Was trip admin'd on behalf of the MTA (Y/N)?
             tests:
               - accepted_values:
-                  values: ["Y", "N"]
+                  values: ['Y', 'N']
                   config:
                     severity: warn
           - name: wav_request_flag
