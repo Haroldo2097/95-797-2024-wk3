@@ -1,3 +1,2 @@
-.multiline
 .mode quote
 SET temp_directory TO '/tmp';
