@@ -1,0 +1,11 @@
+select COUNT(*) AS COUNT
+from "nyc_transit"."main"."mart__fact_all_taxi_trips" t
+left join "nyc_transit"."main"."mart__dim_locations" l
+on t.pulocationid = l.LocationID
+where l.LocationID is null
+┌─────────┐
+│  COUNT  │
+│  int64  │
+├─────────┤
+│ 1588827 │
+└─────────┘

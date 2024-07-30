@@ -9,4 +9,4 @@ SELECT
 FROM {{ ref('stg__yellow_tripdata') }} y
 JOIN {{ ref('mart__dim_locations') }} l 
 ON y.PUlocationID = l.locationid
-LIMIT 100000;
+LIMIT 80000;
